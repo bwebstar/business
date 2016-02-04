@@ -1,0 +1,99 @@
+﻿@model IEnumerable<Business.Models.SalesPersonSales>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Sales Person Sales</h2>
+
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+
+@section Scripts{
+        <script type="text/javascript">
+                $(document).ready(function () {
+                    //load data here
+                    var chartData = null;
+                    $.ajax({
+                        url: '/SalesPersonSales/GetSalesPersonData',
+                        type: 'GET',
+                        dataType: 'json',
+                        data: '',
+                        success: function (d) {
+                            chartData = d;
+                        },
+                        error: function () {
+                            alert('Error!');
+                        }
+                    }).done(function () {
+                        drawChart(chartData);
+                    });
+                });
+
+                google.load('visualization', '1', { packages: ['corechart'] });
+                google.setOnLoadCallback(drawChart);
+
+                function drawChart(d) {
+                    var chartData = d;
+                    var data = null;
+                    data = google.visualization.arrayToDataTable(chartData);
+
+                    google.load("visualization", "1", { packages: ["corechart"] });
+                    google.setOnLoadCallback(drawChart);
+
+                    var options = {
+                        title: 'Sales Per Sales Person',
+                        is3D: true
+                    };
+
+                    var chart = new google.visualization.PieChart(document.getElementById('pieChart'));
+                    chart.draw(data, options);
+                }
+
+        </script>
+    }
+
+    <div id="pieChart" style="width:600px; height:400px;"></div>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.SalesPerson)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SoftwareSales)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ServicesSales)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SupportSales)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.SalesPerson)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SoftwareSales)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ServicesSales)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SupportSales)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+        </td>
+    </tr>
+}
+
+</table>
