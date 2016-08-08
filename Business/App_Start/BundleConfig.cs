@@ -8,6 +8,8 @@ namespace Business
         // For more information on bundling, visit http://go.microsoft.com/fwlink/?LinkId=301862
         public static void RegisterBundles(BundleCollection bundles)
         {
+            //BundleTable.EnableOptimizations = true;
+
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery-{version}.js"));
 
@@ -33,12 +35,12 @@ namespace Business
                       "~/Scripts/app/wow.min.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/css/bootstrap.css",
-                      "~/Content/css/font-awesome.min.css",
-                      "~/Content/css/animate.min.css",
-                      "~/Content/css/prettyPhoto.css",
-                      "~/Content/css/site.css",
-                      "~/Content/css/responsive.css"));
+                      "~/Content/bootstrap.min.css",
+                      "~/Content/font-awesome.min.css",
+                      "~/Content/animate.min.css",
+                      "~/Content/prettyPhoto.css",
+                      "~/Content/Site.css",
+                      "~/Content/responsive.css"));
         }
     }
 }
